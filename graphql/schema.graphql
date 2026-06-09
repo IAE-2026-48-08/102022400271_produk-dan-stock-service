@@ -1,0 +1,13 @@
+type Query {
+    products: [Product!]! @all
+    product(id: ID! @eq): Product @find
+}
+
+type Product {
+    id: ID!
+    name: String!
+    price: Float!
+    stock: Int!
+    created_at: String
+    updated_at: String
+}

@@ -3,6 +3,25 @@ type Query {
     product(id: ID! @eq): Product @find
 }
 
+type Mutation {
+    createProduct(
+        name: String!
+        price: Float!
+        stock: Int!
+    ): Product @create
+
+    updateProduct(
+        id: ID!
+        name: String
+        price: Float
+        stock: Int
+    ): Product @update
+
+    deleteProduct(
+        id: ID!
+    ): Product @delete
+}
+
 type Product {
     id: ID!
     name: String!

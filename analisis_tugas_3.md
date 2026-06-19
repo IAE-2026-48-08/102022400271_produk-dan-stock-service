@@ -1,7 +1,7 @@
 # Analisis Tugas 3
 
-**Nama:** Noval Ariadi  
-**NIM:** 102022400271  
+**Nama:** Noval Ariadi
+**NIM:** 102022400271
 **Layanan:** Product Stock Service
 
 ---
@@ -14,9 +14,9 @@ Setiap kali pengguna melakukan pengecekan produk atau stok, aktivitas tersebut p
 
 Contoh transaksi penting:
 
-- Melihat informasi produk
-- Melihat jumlah stok produk
-- Pengecekan ketersediaan produk
+* Melihat informasi produk
+* Melihat jumlah stok produk
+* Pengecekan ketersediaan produk
 
 ---
 
@@ -26,10 +26,10 @@ Untuk mencatat aktivitas penting yang terjadi pada sistem, Product Stock Service
 
 Ketika pengguna melakukan pengecekan produk, sistem mengirimkan log aktivitas ke layanan audit dengan informasi berupa:
 
-- Team ID
-- Nama aktivitas
-- Informasi produk
-- Jumlah stok
+* Team ID
+* Nama aktivitas
+* Informasi produk
+* Jumlah stok
 
 Contoh aktivitas yang dicatat:
 
@@ -39,9 +39,9 @@ ActivityName: ProductViewed
 
 Tujuan penggunaan SOAP Audit:
 
-- Menyimpan riwayat transaksi penting.
-- Mendukung proses monitoring sistem.
-- Mempermudah proses audit dan pelacakan aktivitas.
+* Menyimpan riwayat transaksi penting.
+* Mendukung proses monitoring sistem.
+* Mempermudah proses audit dan pelacakan aktivitas.
 
 Hasil pengujian SOAP:
 
@@ -54,13 +54,13 @@ Hasil pengujian SOAP:
 
 ## 3. Penggunaan RabbitMQ untuk Penyebaran Informasi
 
-Selain dicatat pada sistem audit, informasi pengecekan stok juga dipublikasikan menggunakan RabbitMQ.
+Selain dicatat pada sistem audit, informasi penting juga dipublikasikan menggunakan RabbitMQ agar dapat digunakan oleh layanan lain.
 
 Event yang dipublikasikan:
 
-```text
-product.stock.checked
-```
+* product.sso.login
+* product.audit.logged
+* product.stock.checked
 
 Exchange yang digunakan:
 
@@ -68,10 +68,30 @@ Exchange yang digunakan:
 iae.central.exchange
 ```
 
-Data yang dikirim:
+Data event login SSO:
 
 ```json
 {
+  "nim": "102022400271",
+  "email": "warga03@ktp.iae.id",
+  "event": "login_success"
+}
+```
+
+Data event audit:
+
+```json
+{
+  "nim": "102022400271",
+  "receipt_number": "IAE-LOG-2026-D3014906"
+}
+```
+
+Data event pengecekan stok:
+
+```json
+{
+  "nim": "102022400271",
   "product_id": 1,
   "product_name": "Keyboard Mechanical",
   "stock": 25
@@ -80,9 +100,9 @@ Data yang dikirim:
 
 Tujuan penggunaan RabbitMQ:
 
-- Menyebarkan informasi ke layanan lain secara asynchronous.
-- Mendukung arsitektur event-driven.
-- Mengurangi ketergantungan antar layanan.
+* Menyebarkan informasi ke layanan lain secara asynchronous.
+* Mendukung arsitektur event-driven.
+* Mengurangi ketergantungan antar layanan.
 
 Hasil pengujian RabbitMQ:
 
@@ -102,8 +122,8 @@ Product Stock Service menggunakan layanan Single Sign-On (SSO) yang disediakan o
 
 Metode autentikasi yang digunakan:
 
-- User Authentication
-- Machine-to-Machine (M2M) Authentication
+* User Authentication
+* Machine-to-Machine (M2M) Authentication
 
 Contoh hasil autentikasi:
 
@@ -129,18 +149,21 @@ participant SSO
 participant SOAPAudit
 participant RabbitMQ
 
-User->>SSO: Login / Request Token
+User->>SSO: Login
 SSO-->>User: JWT Token
+
+ProductService->>RabbitMQ: Publish product.sso.login
 
 User->>ProductService: Check Product Stock
 
-ProductService->>SOAPAudit: Submit Audit Log (SOAP)
-SOAPAudit-->>ProductService: SUCCESS
+ProductService->>SOAPAudit: Submit Audit Log
+SOAPAudit-->>ProductService: Receipt Number
 
-ProductService->>RabbitMQ: Publish Event
-RabbitMQ-->>ProductService: Publish Success
+ProductService->>RabbitMQ: Publish product.audit.logged
 
-ProductService-->>User: Product Stock Information
+ProductService->>RabbitMQ: Publish product.stock.checked
+
+ProductService-->>User: Product Information
 ```
 
 ---
@@ -149,10 +172,18 @@ ProductService-->>User: Product Stock Information
 
 Product Stock Service telah berhasil mengimplementasikan integrasi dengan layanan terpusat yang disediakan pada praktikum Enterprise Application Integration (EAI), yaitu:
 
-- REST API untuk layanan produk.
-- GraphQL untuk akses data produk.
-- SSO untuk autentikasi pengguna dan layanan.
-- SOAP untuk audit aktivitas penting.
-- RabbitMQ untuk penyebaran event antar layanan.
+* REST API untuk layanan produk.
+* GraphQL untuk akses data produk.
+* SSO untuk autentikasi pengguna dan layanan.
+* SOAP untuk audit aktivitas penting.
+* RabbitMQ untuk penyebaran event antar layanan.
+
+Implementasi RabbitMQ berhasil mempublikasikan tiga event yaitu:
+
+* product.sso.login
+* product.audit.logged
+* product.stock.checked
+
+Seluruh event berhasil diterima dan ditampilkan pada RabbitMQ Board yang disediakan oleh server pusat.
 
 Seluruh pengujian menunjukkan status berhasil sehingga layanan telah memenuhi kebutuhan integrasi yang ditentukan pada Tugas 3.

@@ -1,6 +1,6 @@
 services:
   app:
-    image: php:8.2-cli
+    image: composer:2
     container_name: product-stock-service
     working_dir: /app
     volumes:
@@ -9,5 +9,7 @@ services:
       - "8000:8000"
     command: >
       sh -c "
+      composer install &&
+      php artisan key:generate &&
       php artisan serve --host=0.0.0.0 --port=8000
       "

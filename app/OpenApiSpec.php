@@ -15,12 +15,7 @@ use OpenApi\Attributes as OA;
     description: "Local Server"
 )]
 
-#[OA\SecurityScheme(
-    securityScheme: "apiKey",
-    type: "apiKey",
-    name: "X-API-KEY",
-    in: "header"
-)]
+
 
 #[OA\SecurityScheme(
     securityScheme: "iaeKey",

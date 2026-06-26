@@ -16,10 +16,11 @@ class ApiKeyMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $apiKey = $request->header('X-API-KEY');
+        $apiKey = $request->header('X-IAE-KEY') ?? $request->header('X-API-KEY');
         $validKey = env('API_KEY', 'my-secret-api-key');
+        $studentNim = '102022400271';
 
-        if (!$apiKey || $apiKey !== $validKey) {
+        if (!$apiKey || ($apiKey !== $validKey && $apiKey !== $studentNim)) {
             return response()->json([
                 'message' => 'Unauthorized. Invalid or missing API Key.'
             ], 401);

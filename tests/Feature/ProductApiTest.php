@@ -44,4 +44,13 @@ class ProductApiTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonCount(1);
     }
+
+    public function test_can_access_products_with_valid_iae_key(): void
+    {
+        $response = $this->getJson('/api/v1/products', [
+            'X-IAE-KEY' => '102022400271'
+        ]);
+        $response->assertStatus(200);
+        $response->assertJsonCount(1);
+    }
 }

@@ -22,6 +22,13 @@ use OpenApi\Attributes as OA;
     in: "header"
 )]
 
+#[OA\SecurityScheme(
+    securityScheme: "iaeKey",
+    type: "apiKey",
+    name: "X-IAE-KEY",
+    in: "header"
+)]
+
 class OpenApiSpec
 {
 }

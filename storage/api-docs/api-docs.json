@@ -27,6 +27,9 @@
                 "security": [
                     {
                         "apiKey": []
+                    },
+                    {
+                        "iaeKey": []
                     }
                 ]
             }
@@ -54,6 +57,9 @@
                 "security": [
                     {
                         "apiKey": []
+                    },
+                    {
+                        "iaeKey": []
                     }
                 ]
             }
@@ -81,6 +87,9 @@
                 "security": [
                     {
                         "apiKey": []
+                    },
+                    {
+                        "iaeKey": []
                     }
                 ]
             }
@@ -103,6 +112,9 @@
                 "security": [
                     {
                         "apiKey": []
+                    },
+                    {
+                        "iaeKey": []
                     }
                 ]
             }
@@ -113,6 +125,11 @@
             "apiKey": {
                 "type": "apiKey",
                 "name": "X-API-KEY",
+                "in": "header"
+            },
+            "iaeKey": {
+                "type": "apiKey",
+                "name": "X-IAE-KEY",
                 "in": "header"
             }
         }

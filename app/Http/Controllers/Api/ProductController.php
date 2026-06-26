@@ -13,7 +13,7 @@ class ProductController extends Controller
         path: '/api/v1/products',
         summary: 'Get all products',
         tags: ['Products'],
-        security: [['bearerAuth' => []]]
+        security: [['apiKey' => []]]
     )]
     #[OA\Response(
         response: 200,
@@ -28,7 +28,7 @@ class ProductController extends Controller
         path: '/api/v1/products/{id}',
         summary: 'Get product by ID',
         tags: ['Products'],
-        security: [['bearerAuth' => []]]
+        security: [['apiKey' => []]]
     )]
     #[OA\Parameter(
         name: 'id',
@@ -49,7 +49,7 @@ class ProductController extends Controller
         path: '/api/v1/products/{id}/stock',
         summary: 'Get product stock',
         tags: ['Products'],
-        security: [['bearerAuth' => []]]
+        security: [['apiKey' => []]]
     )]
     #[OA\Parameter(
         name: 'id',
@@ -75,7 +75,7 @@ class ProductController extends Controller
         path: '/api/v1/products/check-stock',
         summary: 'Check stock availability',
         tags: ['Products'],
-        security: [['bearerAuth' => []]]
+        security: [['apiKey' => []]]
     )]
     #[OA\RequestBody(required: true)]
     #[OA\Response(

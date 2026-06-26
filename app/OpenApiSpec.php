@@ -16,10 +16,10 @@ use OpenApi\Attributes as OA;
 )]
 
 #[OA\SecurityScheme(
-    securityScheme: "bearerAuth",
-    type: "http",
-    scheme: "bearer",
-    bearerFormat: "JWT"
+    securityScheme: "apiKey",
+    type: "apiKey",
+    name: "X-API-KEY",
+    in: "header"
 )]
 
 class OpenApiSpec

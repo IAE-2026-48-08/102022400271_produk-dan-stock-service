@@ -97,34 +97,21 @@ php artisan serve
 
 ## Endpoint REST API
 
-### GET
+Semua endpoint REST API di bawah ini dilindungi menggunakan **API Key** yang dikirimkan melalui **Request Header** `X-API-KEY`.
 
-```
-/api/products
-```
+### Daftar Endpoint
 
-### GET by ID
+* **GET `/api/v1/products`** - Menampilkan daftar produk
+* **GET `/api/v1/products/{id}`** - Menampilkan detail produk berdasarkan ID
+* **GET `/api/v1/products/{id}/stock`** - Menampilkan informasi stok produk berdasarkan ID
+* **POST `/api/v1/products/check-stock`** - Memeriksa ketersediaan stok produk (Payload: `{"product_id": 1, "quantity": 5}`)
 
-```
-/api/products/{id}
-```
+### Contoh Penggunaan Header
 
-### POST
+Kirimkan header berikut pada setiap request:
 
-```
-/api/products
-```
-
-### PUT
-
-```
-/api/products/{id}
-```
-
-### DELETE
-
-```
-/api/products/{id}
+```http
+X-API-KEY: my-secret-api-key
 ```
 
 ---
